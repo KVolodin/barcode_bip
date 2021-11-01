@@ -1,0 +1,176 @@
+#include "barcode_bip.h"
+
+enum Screen
+{
+    SCREEN_1,
+
+    SCREENS_COUNT,
+};
+
+#define FASTUI_UPDATE_DELAY 150
+
+struct regmenu_ screen_data = {55, 1, 0, touch_handler, keypress_handler, update_screen, 0, init_app, 0, 0};
+
+struct context** ctx_p;
+struct context* ctx;
+
+int main(int return_screen, char** argv)
+{ //	здесь переменная argv не определена
+    init_app((void*)return_screen);
+}
+
+void init_app(void* return_screen)
+{
+#ifdef BipEmulator
+    ctx_p = (context**)get_ptr_temp_buf_2();
+#else
+    ctx_p = get_ptr_temp_buf_2();
+#endif
+
+    // проверка источника запуска процедуры
+    if ((return_screen == *ctx_p) && get_var_menu_overlay())
+    {
+        ctx = *ctx_p;
+#ifdef BipEmulator
+        *ctx_p = (context*)NULL;
+#else
+        *ctx_p = NULL;
+#endif
+        reg_menu(&screen_data, 0);
+        *ctx_p = ctx;
+    }
+    else
+    {
+        reg_menu(&screen_data, 0);
+
+        *ctx_p = (struct context*)pvPortMalloc(sizeof(struct context));
+        ctx = *ctx_p;
+        _memclr(ctx, sizeof(struct context));
+
+#ifdef BipEmulator
+        ctx->proc = (Elf_proc_*)return_screen;
+#else
+        ctx->proc = return_screen;
+#endif
+
+        if (return_screen && ctx->proc->elf_finish)
+        {
+            ctx->ret_f = ctx->proc->elf_finish;
+        }
+        else
+        {
+            ctx->ret_f = show_watchface;
+        }
+
+        initial_values();
+    }
+
+    show_screen();
+}
+
+void initial_values() {}
+
+void show_screen()
+{
+    load_font();
+
+    set_display_state_value(8, 1);
+
+    draw_screen();
+}
+
+void keypress_handler()
+{
+    set_display_state_value(8, 0);
+    show_menu_animate(ctx->ret_f, (unsigned int)init_app, ANIMATE_RIGHT);
+};
+
+void update_screen()
+{
+    switch (ctx->currentScreen)
+    {
+        case SCREEN_1:
+            break;
+        default:
+            break;
+    }
+
+    draw_screen();
+
+    repaint_screen_lines(1, 176);
+
+    set_update_period(1, FASTUI_UPDATE_DELAY);
+}
+
+int touch_handler(void* param)
+{
+#ifdef BipEmulator
+    struct gesture_* gest = (gesture_*)param;
+#else
+    struct gesture_* gest = param;
+#endif
+    int result = 0;
+
+    switch (gest->gesture)
+    {
+        case GESTURE_CLICK:
+        {
+            break;
+        };
+        case GESTURE_SWIPE_RIGHT:
+        {
+            break;
+        };
+        case GESTURE_SWIPE_LEFT:
+        {
+            break;
+        };
+        case GESTURE_SWIPE_UP:
+        {
+            if (ctx->currentScreen < SCREENS_COUNT - 1)
+            {
+                ctx->currentScreen++;
+                show_menu_animate(draw_screen, 0, ANIMATE_UP);
+            }
+
+#ifdef BipEmulator
+            draw_screen();
+            repaint_screen_lines(1, 176);
+#endif
+            break;
+        };
+        case GESTURE_SWIPE_DOWN:
+        {
+            if (ctx->currentScreen > 0)
+            {
+                ctx->currentScreen--;
+                show_menu_animate(draw_screen, 0, ANIMATE_DOWN);
+            }
+
+#ifdef BipEmulator
+            draw_screen();
+            repaint_screen_lines(1, 176);
+#endif
+            break;
+        };
+        default:
+            break;
+    }
+    return result;
+};
+
+void draw_screen()
+{
+    set_fg_color(COLOR_BLACK);
+    set_bg_color(COLOR_WHITE);
+    fill_screen_bg();
+
+    switch (ctx->currentScreen)
+    {
+        case SCREEN_1:
+@REPLACE_STRING@
+            break;
+        default:
+            break;
+    }
+};
