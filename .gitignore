@@ -52,6 +52,7 @@ Mkfile.old
 dkms.conf
 
 .*
+foo
 libbip.h
 BipEmulator/*
 barcode_bip.c

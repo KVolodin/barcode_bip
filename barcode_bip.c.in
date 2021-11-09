@@ -2,8 +2,7 @@
 
 enum Screen
 {
-    SCREEN_1,
-
+@REPLACE_COUNT_SCREEN@
     SCREENS_COUNT,
 };
 
@@ -15,7 +14,7 @@ struct context** ctx_p;
 struct context* ctx;
 
 int main(int return_screen, char** argv)
-{ //	здесь переменная argv не определена
+{
     init_app((void*)return_screen);
 }
 
@@ -27,7 +26,6 @@ void init_app(void* return_screen)
     ctx_p = get_ptr_temp_buf_2();
 #endif
 
-    // проверка источника запуска процедуры
     if ((return_screen == *ctx_p) && get_var_menu_overlay())
     {
         ctx = *ctx_p;
@@ -87,14 +85,6 @@ void keypress_handler()
 
 void update_screen()
 {
-    switch (ctx->currentScreen)
-    {
-        case SCREEN_1:
-            break;
-        default:
-            break;
-    }
-
     draw_screen();
 
     repaint_screen_lines(1, 176);
@@ -167,9 +157,7 @@ void draw_screen()
 
     switch (ctx->currentScreen)
     {
-        case SCREEN_1:
 @REPLACE_STRING@
-            break;
         default:
             break;
     }
