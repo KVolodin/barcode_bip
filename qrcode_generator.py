@@ -197,6 +197,11 @@ def main():
 
     barcodes = [str(text).split('::') for text in args.text]
 
+    for bar in barcodes:
+        if len(bar) != 3:
+            logger.error("Invalid Argument")
+            exit(1)
+
     barcodes_svg = list()
     barcodes_417_svg = list()
     barcodes_qrcode_svg = list()
