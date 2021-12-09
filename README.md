@@ -1,37 +1,36 @@
 # barcode_bip - generator qrcode and barcode
 Instruction:
 
-Tested on packages:
-pdf417         0.8.1
-Pillow         8.4.0
-python-barcode 0.13.1
-qrcode         7.3.1
+Tested on packages:<br />
+pdf417         0.8.1<br />
+Pillow         8.4.0<br />
+python-barcode 0.13.1<br />
+qrcode         7.3.1<br />
 
 1. Run qrcode_generator.py -t "40900411111::upc::Billa" "77897770163499::pdf417::Ashan" "https://github.com/KVolodin/::qrcode::Github"
-2. Run build.bat
-3. Flash elf file
+2. Flash elf file
 
-Format comand line:
+Format comand line:<br />
 code::type::name ( '::' is delimeter)
 
-Avalible types:
-pdf417
-qrcode
-ean8
-ean13
-ean
-gtin
-ean14
-jan
-upc
-upca
-isbn
-isbn13
-gs1
-isbn10
-issn
-code39
-pzn
-code128
-itf
-gs1_128
+Avalible types:<br />
+pdf417<br />
+qrcode<br />
+ean8<br />
+ean13<br />
+ean<br />
+gtin<br />
+ean14<br />
+jan<br />
+upc<br />
+upca<br />
+isbn<br />
+isbn13<br />
+gs1<br />
+isbn10<br />
+issn<br />
+code39<br />
+pzn<br />
+code128<br />
+itf<br />
+gs1_128<br />

@@ -57,3 +57,4 @@ libbip.h
 BipEmulator/*
 barcode_bip.c
 barcodes_svg/*
+name.txt

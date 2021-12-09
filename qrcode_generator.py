@@ -6,6 +6,7 @@ from collections import namedtuple
 from argparse import ArgumentParser
 from pdf417 import encode, render_svg
 from xml.dom import minidom
+import os
 
 Barcode = namedtuple('Barcode', 'code type name')
 MinMax = namedtuple('MinMax', 'min_x min_y max_x max_y')
@@ -13,7 +14,6 @@ Point = namedtuple('Point', 'x y')
 PointWidth = namedtuple('PointWidth', 'x width')
 Rect = namedtuple('Rect', 'x y width height')
 
-BARCODE_FOLDER = 'barcode'
 FORMAT_FILLED_RECT_VERT_STRING = '\t\t\tdraw_filled_rect({:.0f}, 45, {:.0f}, 160);\n'
 FORMAT_VERTICAL_LINE_STRING = '\t\t\tdraw_vertical_line({:.0f}, 45, 160);\n'
 FORMAT_FILLED_RECT_STRING = "\t\t\tdraw_filled_rect({:.0f}, {:.0f}, {:.0f}, {:.0f});\n"
@@ -250,6 +250,8 @@ def main():
         current_screen = current_screen + 1
 
     configure_in_file(result, count_screen_str, FILE_NAME)
+
+    os.system("build.py")
 
 
 if __name__ == "__main__":
